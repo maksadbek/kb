@@ -3,6 +3,7 @@
 #include "util.h"
 #include <iostream>
 
+
 int parent(int i) {
 	return ceil(i/2);
 }

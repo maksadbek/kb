@@ -1,9 +1,6 @@
-package main
+package mergeSort
 
-import (
-	"fmt"
-	"math"
-)
+import "math"
 
 func merge(A []int, p, q, r int) {
 	n1 := q - p + 1 // why +1 ??
@@ -19,8 +16,8 @@ func merge(A []int, p, q, r int) {
 		R[i] = A[q+i+1]
 	}
 
-	L[n1] = 100
-	R[n2] = 100
+	L[n1] = 10000
+	R[n2] = 10000
 
 	var i, j int
 	for k := p; k <= r; k++ {
@@ -43,8 +40,10 @@ func mergeSort(A []int, p, r int) {
 	}
 }
 
+/*
 func main() {
 	A := []int{8, 7, 6, 5, 4, 3, 2, 1}
 	mergeSort(A, 0, len(A)-1)
 	fmt.Println(A)
 }
+*/

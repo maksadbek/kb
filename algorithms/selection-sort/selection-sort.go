@@ -1,6 +1,4 @@
-package main
-
-import "fmt"
+package selectionSort
 
 func selection_sort(L []int) []int {
 	for i := 0; i < len(L); i++ {
@@ -15,10 +13,4 @@ func selection_sort(L []int) []int {
 		L[i] = min
 	}
 	return L
-}
-
-func main() {
-	m := []int{9, 8, 7, 6, 5, 4, 3, 2, 1}
-	l := selection_sort(m)
-	fmt.Println(l)
 }

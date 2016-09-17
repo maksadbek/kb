@@ -1,6 +1,4 @@
-package main
-
-import "fmt"
+package insertionSort
 
 func insSort(data []int) {
 	for i := 1; i < len(data); i++ {
@@ -11,12 +9,13 @@ func insSort(data []int) {
 			j = j - 1
 		}
 		data[j+1] = key
-		fmt.Printf("%+v\n", data)
 	}
 }
 
+/*
 func main() {
 	d := []int{9, 8, 7, 6, 5, 4, 3, 2, 1}
 	insSort(d)
 	fmt.Println(d)
 }
+*/
