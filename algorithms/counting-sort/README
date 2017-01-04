@@ -1,0 +1,27 @@
+Counting sort assumes that for each input element X the number of input
+elements is less than X.
+
+For example, if 17 is less than X, then X belongs to the output position 18.
+Algorihms requires an input array A[0..n], and thus A.length = n.
+There are two additional arrays:
+B[1..n] holds the sorted output.
+C[0..k] provides temporary working storage.
+
+Algorithm:
+Counting-Sort(A,B,K)
+let C[0..k] be a new array
+for i = 0 to k
+	C[i] = 0
+
+
+// fill C with number equal to i
+for j = 0 to A.length
+	C[A[j]] = C[A[j]] + 1
+
+// fill C with number less than or equal to i
+for i = 1 to k
+	C[i] = C[i] + C[i - 1]
+
+for j = A.length down to 1
+	B[C[A[j]]] = A[j]
+	C[A[j]] = C[A[j]] - 1
