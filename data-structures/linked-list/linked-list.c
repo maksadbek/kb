@@ -10,7 +10,7 @@ list* search_list(list *l, int x) {
 	if (l == NULL) {
 		return NULL;
 	}
-
+	
 	if (l->item == x) {
 		return l;
 	} else {
@@ -47,6 +47,7 @@ void delete_list(list **l, int x) {
 	list *p;
 	list *pred;
 
+
 	p = search_list(*l, x);
 
 	if(p != NULL) {
@@ -64,6 +65,8 @@ void delete_list(list **l, int x) {
 int main(int argc, char** argv) {
 	list** l = malloc(sizeof(list));
 
+	*l = NULL;
+
 	insert_list(l, 1);
 	insert_list(l, 2);
 	insert_list(l, 3);
@@ -72,20 +75,19 @@ int main(int argc, char** argv) {
 
 	list* f = search_list(l[0], 3);
 	if (f == NULL) {
-		printf("not found node with value %d", 3);
+		printf("not found node with value %d\n", 3);
 		return 0;
 	} else {
-		printf("found node with value %d", 3);
+		printf("found node with value %d as expected\n", 3);
 	}
 
 	delete_list(l, 3);
 
-	printf("deleting list");
-
 	list* not_found = search_list(l[0], 3);
-	if (not_found == NULL) {
-		printf("unexpected finding");
+
+	if (not_found) {
+		printf("unexpected finding\n");
 	} else {
-		printf("it works!");
+		printf("it works!\n");
 	}
 }
