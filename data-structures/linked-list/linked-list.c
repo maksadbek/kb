@@ -63,9 +63,12 @@ void delete_list(list **l, int x) {
 }
 
 int main(int argc, char** argv) {
-	list** l = malloc(sizeof(list));
+	list** l = calloc(0, sizeof(list));
 
-	*l = NULL;
+	if(*l == NULL) {
+		printf("yeah\n");
+		return 0;
+	}
 
 	insert_list(l, 1);
 	insert_list(l, 2);
