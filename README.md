@@ -1,1 +1,1 @@
-# KnowledgeBase notes
+# Knowledge base notes
