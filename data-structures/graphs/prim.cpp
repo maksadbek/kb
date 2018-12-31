@@ -1,5 +1,9 @@
-// prims algorithm
-// this program requires that input was a decart coordinates
+// Prims algorithm
+// This program requires that input was a decart coordinates
+// It is not guaranteed that it always works correctly.
+// Implementation differs from the Cormen's book.
+// It did not worked for my case. More precisely, the relaxation part worked wrong.
+
 #include <iostream>
 #include <vector>
 #include <limits>
@@ -29,23 +33,37 @@ double prim(vector<vector<int_pair>> adj, int s) {
 	vector<double> dist(adj.size(), inf);
 	dist[s] = 0;
 
-	double min_dist = 0;	
+	// min_dist is a minimum spanning tree length.
+	double min_dist = 0;
+
 	for(int i = 0; i < adj.size(); i++) {
+		// This loop find the vertex with smallest weight
+		// It can be replaced with Priority Queue.
 		int cur = -1;
 		for(int j = 0; j < dist.size(); j++) {
+			// always choose a vertex that is not in the minimum spanning tree.
 			if(used[j]) {
 				continue;
 			}
+			
 			if(cur == -1 || dist[j] < dist[cur]) {
 				cur = j;
 			}
 		}
 
+		// add this vertex to minimum spanning tree.
 		min_dist += dist[cur];
+		
+		// this it as used
 		used[cur] = true;
+		
+		// discover adjacent vertexes and update their distances.
 		for(auto const &v : adj[cur]) {
 			double w = v.first;
 			int to = v.second;
+			
+			// if it is not already in the mininum spanning tree
+			// and distance to this vertex is less than what we already have.
 			if(!used[to] and w < dist[to]) {
 				dist[to] = w;
 			}
