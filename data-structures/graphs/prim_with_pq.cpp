@@ -35,6 +35,7 @@ long long prim(int x) {
         marked[x] = true;
         for(int i = 0;i < adj[x].size();++i) {
             y = adj[x][i].second;
+	    // It seems a bit incorrect, because there must be a relaxation.
             if(marked[y] == false) {
                 Q.push(adj[x][i]);
 	    }
