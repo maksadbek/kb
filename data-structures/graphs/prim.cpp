@@ -1,8 +1,6 @@
 // Prims algorithm
 // This program requires that input was a decart coordinates
 // It is not guaranteed that it always works correctly.
-// Implementation differs from the Cormen's book.
-// It did not worked for my case. More precisely, the relaxation part worked wrong.
 
 #include <iostream>
 #include <vector>
