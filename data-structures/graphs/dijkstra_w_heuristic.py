@@ -1,3 +1,8 @@
+"""
+Not sure if it works correctly, the d'(x,y) = d(x,y) + h(y) - h(x) is not clear for me yet.
+Asked for answer: https://cs.stackexchange.com/questions/103078/proof-of-heuristic-function-in-a-star-algorithm
+"""
+
 import queue
 import math
 import sys
