@@ -48,15 +48,6 @@ long long query(int s, int t) {
         q[0].push(make_pair(0, s));
         g[1][t] = 0;
 
-        /*
-        vector<int> parent[2];
-        parent[0] = vector<int>(n);
-        parent[1] = vector<int>(n);
-        
-        parent[0][s] = -1;
-        parent[1][t] = -1;
-        */
-        
         while(true) {
                 if(q[0].empty()) {
                         break;
@@ -65,7 +56,6 @@ long long query(int s, int t) {
                 auto u = q[0].top().second;
                 q[0].pop();
                 
-                // printf("[search] forward: %d\n", u);
                 if(!visited[0][u]) {
                         visited[0][u] = true;
                         for(auto &v: adj[0][u]) {
