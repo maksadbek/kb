@@ -24,7 +24,11 @@ compute_prefix_function(P)
 
 The answer is i
  
-If the string P is AAA…AAC with i as and one C, then on iteration i initially border = i - 1, and we will compare P[i] = B with P[i - 1], P[i - 2], …, P[1] and then border will become 0, we will make the last test, and then the while loop will stop. There cannot be more iterations, because the border cannot be more than i - 1 initially, it decreases on each iteration of the while loop, and the while loop stops as soon as border = 0
+If the string P is AAA…AAC with i as and one C, then on iteration i initially border = i - 1, and
+we will compare P[i] = B with P[i - 1], P[i - 2], …, P[1] and then border will become 0, we will
+make the last test, and then the while loop will stop. There cannot be more iterations, because the
+border cannot be more than i - 1 initially, it decreases on each iteration of the while loop, and the
+while loop stops as soon as border = 0
 
 
 Lemma:
@@ -39,7 +43,9 @@ Proof:
 
 Lemma:
     If s(i) > 0, then all borders of P[0..i] but for the longest one are also borders of P[0..s(i) − 1]. 
-i.e: the border b is longest prefix and suffix of string P. As the b is the longest border, it repeats at the beginning and at the end of the string P. The prefix of this b ends at s(i) - 1. Of course, the border b can also contain borders too.
+i.e: the border b is longest prefix and suffix of string P. As the b is the longest border, it repeats at
+the beginning and at the end of the string P. The prefix of this b ends at s(i) - 1. Of course, the border b can
+also contain borders too.
 
 Proof:
 - Let u be a border of P[0..i] such that |u| < s(i)
