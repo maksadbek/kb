@@ -38,161 +38,173 @@ end
         
 """
 
-p = 2 ** 31 - 1
-depth = 4
-width = 10
+class Heap():
+    def __init__(self):
+        self.heap = []
 
-def parent(node):
-    if node == 0:
-        return 0
+    def parent(self, node):
+        if node == 0:
+            return 0
 
-    return int((node / 2) - 1)
+        return int((node / 2) - 1)
 
-def child_left(node):
-    return node * 2 - 1
+    def child_left(self, node):
+        return node * 2 + 1
 
-def child_right(node):
-    return node * 2 + 2
+    def child_right(self, node):
+        return node * 2 + 2
 
-def heapsiftup(heap, node):
-    while 0 <= node and heap[node][1] < heap[parent(node)][1]:
-        heap[parent(node)], heap[node] = heap[node], heap[parent(node)]
-        node = parent(node)
+    def siftup(self, node):
+        while 0 <= node and self.heap[node][1] < self.heap[self.parent(node)][1]:
+            self.heap[self.parent(node)], self.heap[node] = self.heap[node], self.heap[self.parent(node)]
+            node = self.parent(node)
 
-    return node
+        return node
 
-def heapsiftdown(heap, node):
-    n = node
+    def siftdown(self, node):
+        n = node
 
-    left = child_left(node)
-    while left < len(heap) and heap[left][1] < heap[n][1]:
-        n = left
+        left = self.child_left(node)
+        if left < len(self.heap) and self.heap[left][1] < self.heap[n][1]:
+            n = left
 
-    right  = child_right(node)
-    while right < len(heap) and heap[right][1] < heap[n][1]:
-        n = right
+        right = self.child_right(node)
+        if right < len(self.heap) and self.heap[right][1] < self.heap[n][1]:
+            n = right
 
-    if heap[n][0] != heap[node][0]:
-        heap[n], heap[node] = heap[node], heap[n]
-        heapsiftdown(heap, n)
+        if self.heap[n][1] != self.heap[node][1]:
+            self.heap[n], self.heap[node] = self.heap[node], self.heap[n]
+            self.siftdown(n)
 
-    return n
+        return n
 
-def heappush(heap, v):
-    """ Add item to the heap.
-        >>> heap = []
-        >>> heappush(heap, ("Chicago", 1759))
-    """
-    heap.append(v)
-    heapsiftup(heap, len(heap)-1)
+    def push(self, v):
+        """ Add item to the heap.
+            >>> heap = []
+            >>> heappush(heap, ("Chicago", 1759))
+        """
+        self.heap.append(v)
+        self.siftup(len(self.heap)-1)
 
-def heappop(heap):
-    if len(heap) == 0:
-        return None
+    def pop(self):
+        if len(self.heap) == 0:
+            return None
 
-    top = heap[0]
+        top = self.heap[0]
 
-    heap[0] = heap[-1]
-    heap.pop()
+        self.heap[0] = self.heap[-1]
+        self.heap.pop()
 
-    if heap:
-        heapsiftdown(heap, 0)
+        if self.heap:
+            self.siftdown(0)
 
-    return top
+        return top
 
-def heapchangepriority(heap, k, p):
-    # find it
-    for i, v in enumerate(heap):
-        if v[0] == k:
-            break
+    def changepriority(self, k, p):
+        # find it
+        for i, v in enumerate(self.heap):
+            if v[0] == k:
+                break
 
-    if not v:
-        return -1
+        if not v:
+            return -1
 
-    old_priority = v[1]
-    heap[i] = (k, p)
+        old_priority = v[1]
+        self.heap[i] = (k, p)
 
-    if p < old_priority:
-        heapsiftup(heap, i)
-    else:
-        heapsiftdown(heap, i)
-
-def heapfind(heap, k):
-    for i in heap:
-        if i[0] == k:
-            return True
-
-    return False
-
-def heaptop(heap):
-    return heap[0]
-
-def genh():
-    a, b = random.randint(1, p), random.randint(0, p)
-
-    def h(x):
-        return ((a * x + b) % p) % width
-
-    return h
-
-def gent():
-    a, b = random.randint(1, p), random.randint(0, p)
-
-    def h(x):
-        r = ((a * x + b) % p) % 100
-        return -1 if r < 50 else 1
-
-    return h
-
-h = genh()
-t = gent()
-
-h = list()
-s = list()
-
-for i in range(depth):
-    h.append(genh())
-    s.append(gent())
-
-c = [[0 for j in range(width)] for i in range(depth)]
-
-sample = [1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 3, 45]
-
-# hash objects in the sample and fill the table
-for i in sample:
-    for j, r in enumerate(h): 
-        c[j][r(i)] += s[j](i)
-
-# count the occurences of items
-def approxpoint(i):
-    result = []
-    for j, r in enumerate(h):
-        result.append(c[j][r(i)] * s[j](i))
-
-    return sorted(result)[int(len(result)/2)]
-
-def countsketch(sample, k):
-    heap = []
-
-    for i in sample:
-        freq = approxpoint(i)
-    
-        if heapfind(heap, i):
-            heapchangepriority(heap, i, freq)
-            continue
-
-        if len(heap) < k:
-            heappush(heap, (i, freq))
+        if p < old_priority:
+            self.siftup(i)
         else:
-           fmin, imin = heaptop(heap)
-           if fmin < freq:
-               heappush(heap, (i, f))
-               heappop(heap)
+            self.siftdown(i)
 
-    return heap
+    def find(self, k):
+        for i in self.heap:
+            if i[0] == k:
+                return True
 
-trend = countsketch(sample, 3)
+        return False
 
+    def top(self):
+        if not self.heap:
+            return None
+
+        return self.heap[0]
+
+    def size(self):
+        return len(self.heap)
+
+
+class Countsketch():
+    def __init__(self, width, depth, sample, k):
+        self.width = width
+        self.depth = depth
+        self.sample = sample
+        self.k = k
+        self.h = list()
+        self.s = list()
+        self.c = [[0 for j in range(width)] for i in range(depth)]
+        self.p = 2 ** 31 - 1
+
+        for i in range(depth):
+            self.h.append(self.genh())
+            self.s.append(self.gent())
+
+        # hash objects in the sample and fill the table
+        for i in sample:
+            for j, r in enumerate(self.h): 
+                self.c[j][r(i)] += self.s[j](i)
+
+    def genh(self):
+        a, b = random.randint(1, self.p), random.randint(0, self.p)
+
+        def h(x):
+            return ((a * x + b) % self.p) % self.width
+
+        return h
+
+    def gent(self):
+        a, b = random.randint(1, self.p), random.randint(0, self.p)
+
+        def h(x):
+            r = ((a * x + b) % self.p) % 100
+            return -1 if r < 50 else 1
+
+        return h
+
+    # count the occurences of items
+    def approxpoint(self, i):
+        result = []
+        for j, r in enumerate(self.h):
+            result.append(self.c[j][r(i)] * self.s[j](i))
+
+        return sorted(result)[int(len(result)/2)]
+
+    def topk(self):
+        heap = Heap()
+
+        for i in self.sample:
+            freq = self.approxpoint(i)
+        
+            if heap.find(i):
+                heap.changepriority(i, freq)
+                continue
+
+            if heap.size() < self.k:
+                heap.push((i, freq))
+            else:
+               fmin, imin = heap.top()
+               if fmin < freq:
+                   heap.push((i, freq))
+                   heap.pop()
+
+        trend = []
+        while heap.top():
+            trend.append(heap.pop())
+
+        trend.reverse()
+        return trend
+
+sample=[1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 3, 9, 9, 8, 8, 8, 8, 9]
 print(sample)
-while trend:
-    print(heappop(trend))
+cs = Countsketch(width=15, depth=5, k=4, sample=sample)
+print(cs.topk())
