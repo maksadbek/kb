@@ -21,7 +21,7 @@ int64_t modadd(int64_t a, int64_t b) {
 }
 
 int main() {
-    // compute the a^2 - b^2
+    // compute the (a^2 - b^2) mod 1e6+7
     int64_t a, b; cin >> a >> b;
 
     cout << modsub(modmul(a, a), modmul(b, b)) << endl;
