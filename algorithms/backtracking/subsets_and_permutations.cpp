@@ -23,26 +23,21 @@ void backtrack_subsets(vector<int> &a, int k, vector<int> &input) {
 }
 
 void backtrack_permutations(vector<int> &a, int k, vector<int> &input) {
-	if (k == input.size()) {
+	if (k == input.size() - 1) {
 		for (int i : a) {
 			cout << input[i] << ", ";
 		}
 		cout << endl;
 	} else {
 		vector<int> in_perm(a.size(), false);
-		for(int i : a) {
-			if (i >= 0) {
-				in_perm[i] = true;
-			}
-		}
+		for(int i = 0; i <= k; i++) in_perm[a[i]] = true;
 
+		k++;
 		for(int i = 0; i < input.size(); i++) {
-			if (in_perm[i]) {
-				continue;
-			}
+			if (in_perm[i]) continue;
 
 			a[k] = i;
-			backtrack_permutations(a, k+1, input);
+			backtrack_permutations(a, k, input);
 		}
 	}
 }
@@ -58,7 +53,7 @@ int main() {
 	}
 
 //	backtrack_subsets(a, 0, input);
-	backtrack_permutations(a, 0, input);
+	backtrack_permutations(a, -1, input);
 
 	return 0;
 }
