@@ -38,13 +38,6 @@ func removewhitespace(s []byte) string {
 		}
 	}
 
-	w := 0
-
-	for ; w < len(s); w++ {
-		if s[w] == ' ' {
-		}
-	}
-
 	return string(s[:i-1])
 }
 
